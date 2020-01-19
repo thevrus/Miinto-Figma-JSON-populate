@@ -1,24 +1,28 @@
 figma.showUI(__html__);
 
-figma.ui.onmessage = msg => {
-  console.log("msg", msg);
+figma.ui.onmessage = async msg => {
+  if (msg.status === 200 && msg.response) {
+    const response = JSON.parse(msg.response);
 
-  if (msg.type === "fetch-names") {
     if (figma.currentPage.selection.length > 0) {
-      const names: Array<String> = [];
+      let i = 0;
 
       for (const node of figma.currentPage.selection) {
+        for (const childNode of node.children) {
+          if (childNode.type === "TEXT" && childNode.name.indexOf("$") === 0) {
+            let nodeName = childNode.name.replace("$", "");
 
-        for (const singleNode of node.children) {
-          names.push(singleNode.name);
+            await figma.loadFontAsync(childNode.fontName);
+            childNode.characters = response[i][nodeName];
+          }
         }
-      }
 
-      console.log("names", names);
+        i++;
+      }
 
       figma.closePlugin();
     } else {
-      console.log("Select frame or group");
+      figma.ui.postMessage("Select frame or group");
     }
   }
 

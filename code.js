@@ -1,20 +1,33 @@
+var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
+    function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
+    return new (P || (P = Promise))(function (resolve, reject) {
+        function fulfilled(value) { try { step(generator.next(value)); } catch (e) { reject(e); } }
+        function rejected(value) { try { step(generator["throw"](value)); } catch (e) { reject(e); } }
+        function step(result) { result.done ? resolve(result.value) : adopt(result.value).then(fulfilled, rejected); }
+        step((generator = generator.apply(thisArg, _arguments || [])).next());
+    });
+};
 figma.showUI(__html__);
-figma.ui.onmessage = msg => {
-    console.log("msg", msg);
-    if (msg.type === "fetch-names") {
+figma.ui.onmessage = (msg) => __awaiter(this, void 0, void 0, function* () {
+    if (msg.status === 200 && msg.response) {
+        const response = JSON.parse(msg.response);
         if (figma.currentPage.selection.length > 0) {
-            const names = [];
+            let i = 0;
             for (const node of figma.currentPage.selection) {
-                for (const singleNode of node.children) {
-                    names.push(singleNode.name);
+                for (const childNode of node.children) {
+                    if (childNode.type === "TEXT" && childNode.name.indexOf("$") === 0) {
+                        let nodeName = childNode.name.replace("$", "");
+                        yield figma.loadFontAsync(childNode.fontName);
+                        childNode.characters = response[i][nodeName];
+                    }
                 }
+                i++;
             }
-            console.log("names", names);
             figma.closePlugin();
         }
         else {
-            console.log("Select frame or group");
+            figma.ui.postMessage("Select frame or group");
         }
     }
     figma.closePlugin();
-};
+});
