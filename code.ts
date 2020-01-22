@@ -14,6 +14,15 @@ figma.ui.onmessage = async msg => {
 
             await figma.loadFontAsync(childNode.fontName);
             childNode.characters = response[i][nodeName];
+          } else if (childNode.type === "RECTANGLE") {
+            msg.images.forEach(element => {
+              let data = element as Uint8Array;
+              let imageHash = figma.createImage(new Uint8Array(data)).hash;
+
+              childNode.fills = [
+                { type: "IMAGE", scaleMode: "FILL", imageHash }
+              ];
+            });
           }
         }
 
