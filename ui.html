@@ -493,10 +493,10 @@
 </style>
 <main>
   <input id="link" type="input" class="input" placeholder="Link address" value="" style="margin-bottom: 12px">
-
-  <div class="checkbox" style="margin-bottom: 8px">
+  <div class="checkbox">
     <input class="checkbox__box" type="checkbox" id="image">
-    <label class="checkbox__label" for="image">Has images ?</label>
+    <label class="checkbox__label" for="image">Has images ?
+    </label>
   </div>
 
   <button id="create" class='button button--primary'>Create</button>
@@ -506,21 +506,25 @@
   <script>
     document.getElementById('create').onclick = () => {
       const imgChec = document.getElementById('image');
-      const textbox = document.getElementById('link');
-      const link = textbox.value;
-
-      if (link) {
+      const input = document.getElementById('link');
+      const proxyurl = "https://cors-anywhere.herokuapp.com/";
+      const link = input.value || 'https://www.miinto.pl/guide-k?sort=popular%20desc&page=368';
 
         const imgArray = [];
 
         if (imgChec.checked) {
-          fetch(link).then((response) => {
+          fetch(proxyurl + link, {
+            method: 'GET',
+            headers: {
+              'X-Requested-With': 'XMLHttpRequest',
+              'Content-Type': 'application/json',
+              'Accept': '*/*'
+            }
+          }).then((response) => {
             return response.json();
           }).then((resJson) => {
-            resJson.forEach(item => {
-              console.log('imgUrl', item.img)
-
-              fetch(item.img).then(response => {
+            resJson.products.list.forEach(item => {
+              fetch(proxyurl + item.photo_url).then(response => {
                 return response.arrayBuffer()
               }).then(a => {
                 imgArray.push(new Uint8Array(a));
@@ -530,8 +534,11 @@
         }
 
         const request = new XMLHttpRequest();
-        request.open('GET', link);
+        request.open('GET', proxyurl + link, true);
         request.responseType = "text";
+        request.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
+        request.setRequestHeader('Content-Type', 'application/json');
+        request.setRequestHeader('Accept', '*/*'); // accept all
 
         request.onload = () => {
           parent.postMessage({
@@ -543,7 +550,6 @@
           }, '*')
         }
         request.send()
-      }
     }
 
     document.getElementById('cancel').onclick = () => {

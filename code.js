@@ -10,8 +10,11 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
 figma.showUI(__html__);
 figma.ui.onmessage = (msg) => __awaiter(this, void 0, void 0, function* () {
     if (msg.status === 200 && msg.response) {
-        const response = JSON.parse(msg.response);
-        // console.log(msg.response);
+        const response = yield JSON.parse(msg.response);
+        const products = response.products;
+        const list = response.products.list;
+        const images = msg.images;
+        console.log(products);
         if (figma.currentPage.selection.length > 0) {
             let i = 0;
             for (const node of figma.currentPage.selection) {
@@ -19,16 +22,14 @@ figma.ui.onmessage = (msg) => __awaiter(this, void 0, void 0, function* () {
                     if (childNode.type === "TEXT" && childNode.name.indexOf("$") === 0) {
                         let nodeName = childNode.name.replace("$", "");
                         yield figma.loadFontAsync(childNode.fontName);
-                        childNode.characters = response[i][nodeName];
+                        childNode.characters = list[i][nodeName];
                     }
                     else if (childNode.type === "RECTANGLE") {
-                        msg.images.forEach(element => {
-                            let data = element;
-                            let imageHash = figma.createImage(new Uint8Array(data)).hash;
-                            childNode.fills = [
-                                { type: "IMAGE", scaleMode: "FILL", imageHash }
-                            ];
-                        });
+                        let data = images[i];
+                        let imageHash = figma.createImage(new Uint8Array(data)).hash;
+                        childNode.fills = [
+                            { type: "IMAGE", scaleMode: "FILL", imageHash }
+                        ];
                     }
                 }
                 i++;

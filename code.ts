@@ -2,7 +2,13 @@ figma.showUI(__html__);
 
 figma.ui.onmessage = async msg => {
   if (msg.status === 200 && msg.response) {
-    const response = JSON.parse(msg.response);
+
+    const response = await JSON.parse(msg.response);
+    const products = response.products;
+    const list = response.products.list;
+    const images = msg.images;
+
+    console.log(products);
 
     if (figma.currentPage.selection.length > 0) {
       let i = 0;
@@ -13,16 +19,15 @@ figma.ui.onmessage = async msg => {
             let nodeName = childNode.name.replace("$", "");
 
             await figma.loadFontAsync(childNode.fontName);
-            childNode.characters = response[i][nodeName];
+            childNode.characters = list[i][nodeName];
           } else if (childNode.type === "RECTANGLE") {
-            msg.images.forEach(element => {
-              let data = element as Uint8Array;
-              let imageHash = figma.createImage(new Uint8Array(data)).hash;
 
-              childNode.fills = [
-                { type: "IMAGE", scaleMode: "FILL", imageHash }
-              ];
-            });
+            let data = images[i] as Uint8Array;
+            let imageHash = figma.createImage(new Uint8Array(data)).hash;
+
+            childNode.fills = [
+              { type: "IMAGE", scaleMode: "FILL", imageHash }
+            ];
           }
         }
 
