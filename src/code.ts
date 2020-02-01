@@ -8,12 +8,13 @@ figma.ui.onmessage = async msg => {
     const list = response.products.list;
     const images = msg.images;
 
-    console.log(products);
-
     if (figma.currentPage.selection.length > 0) {
       let i = 0;
 
+      console.log('node', figma.currentPage);
       for (const node of figma.currentPage.selection) {
+        console.log('node', node);
+
         for (const childNode of node.children) {
           if (childNode.type === "TEXT" && childNode.name.indexOf("$") === 0) {
             let nodeName = childNode.name.replace("$", "");
@@ -34,11 +35,11 @@ figma.ui.onmessage = async msg => {
         i++;
       }
 
-      figma.closePlugin();
+      // figma.closePlugin();
     } else {
       figma.ui.postMessage("Select frame or group");
     }
   }
 
-  figma.closePlugin();
+  // figma.closePlugin();
 };

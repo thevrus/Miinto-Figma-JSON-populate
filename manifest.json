@@ -1,7 +1,7 @@
 {
-  "name": "Products fetcher",
+  "name": "Miinto JSON populate",
   "id": "794253589800701881",
   "api": "1.0.0",
-  "main": "code.js",
-  "ui": "ui.html"
+  "main": "dist/code.js",
+  "ui": "dist/ui.html"
 }
