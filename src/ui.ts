@@ -1,4 +1,4 @@
-import './ui.css'
+import './scss/figma-plugin-ds.scss'
 
 document.getElementById('create').onclick = () => {
     const imgChec = document.getElementById('image');
