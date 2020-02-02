@@ -3,7 +3,7 @@ import './scss/figma-plugin-ds.scss'
 document.getElementById('create').onclick = () => {
     const imgChec = document.getElementById('image');
     const input = document.getElementById('link');
-    const proxyurl = "https://cors-anywhere.herokuapp.com/";
+    const proxyurl = "https://figma-proxy-server.herokuapp.com/";
     const link = input.value || 'https://www.miinto.pl/guide-k?sort=popular%20desc&page=368';
     const imgArray = [];
 
