@@ -7,6 +7,7 @@ figma.ui.onmessage = async msg => {
     const response = await JSON.parse(msg.response);
     let list = response.products.list;
     let images = msg.images;
+    const selectionsLength = figma.currentPage.selection.length;
 
     function traverse(node, i) {
       if (node.type === 'GROUP') {
@@ -39,8 +40,23 @@ figma.ui.onmessage = async msg => {
       ];
     }
 
-    if (figma.currentPage.selection.length > 0) {
-      list.length = figma.currentPage.selection.length;
+    if (selectionsLength > 0) {
+      images.length = selectionsLength;
+      list.length = selectionsLength;
+
+      list = list.map((item) => {
+        return {
+          title: item.title,
+          brand: item.brand,
+          discount_percent: item.discount_percent,
+          price: item.price.price,
+          price_before: item.price.price_before,
+          url: item.url,
+          id: item.id,
+          meta_id: item.meta_id,
+          photo_url: item.photo_url
+        }
+      });
 
       let i = 0;
 
