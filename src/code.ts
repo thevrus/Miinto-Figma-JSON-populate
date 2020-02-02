@@ -16,7 +16,7 @@ figma.ui.onmessage = async msg => {
       else if (node.type === "TEXT" && node.name.indexOf("$") === 0) {
         replaceText(node, i);
 
-      } else if (node.type === "RECTANGLE") {
+      } else if (node.type === "RECTANGLE" && node.name.indexOf("$") === 0) {
         replaceImage(node, i)
       }
     }
