@@ -2,28 +2,39 @@
 @mixin font-ui-pos($size, $weight) {
 	font-family: $font-stack;
 
-	//weight 
-	@if $weight == 'bold' {
+	//weight
+	@if $weight=='bold' {
 		font-weight: $font-weight-bold;
-	} @else if $weight == 'medium' {
+	}
+
+	@else if $weight=='medium' {
 		font-weight: $font-weight-medium;
-	} @else {
+	}
+
+	@else {
 		font-weight: $font-weight-normal;
 	}
+
 	//letterspacing + size
-	@if $size == 'small' {
+	@if $size=='small' {
 		font-size: $font-size-small;
 		line-height: $font-lineheight;
 		letter-spacing: $font-letterspacing-pos-small;
-	} @else if $size == 'medium' {
+	}
+
+	@else if $size=='medium' {
 		font-size: $font-size-medium;
 		line-height: $font-lineheight;
 		letter-spacing: $font-letterspacing-pos-medium;
-	} @else if $size == 'large' {
+	}
+
+	@else if $size=='large' {
 		font-size: $font-size-large;
 		line-height: $font-lineheight-large;
 		letter-spacing: $font-letterspacing-pos-xlarge;
-	} @else {
+	}
+
+	@else {
 		font-size: $font-size-xlarge;
 		line-height: $font-lineheight-large;
 		letter-spacing: $font-letterspacing-pos-xlarge;
@@ -34,28 +45,38 @@
 	font-family: $font-stack;
 
 	//weight 
-	@if $weight == 'bold' {
+	@if $weight=='bold' {
 		font-weight: $font-weight-bold;
-	} @else if $weight == 'medium' {
+	}
+
+	@else if $weight=='medium' {
 		font-weight: $font-weight-medium;
-	} @else {
+	}
+
+	@else {
 		font-weight: $font-weight-normal;
 	}
 
 	//letterspacing + size
-	@if $size == 'small' {
+	@if $size=='small' {
 		font-size: $font-size-small;
 		line-height: $font-lineheight;
 		letter-spacing: $font-letterspacing-neg-small;
-	} @else if $size == 'medium' {
+	}
+
+	@else if $size=='medium' {
 		font-size: $font-size-medium;
 		line-height: $font-lineheight;
 		letter-spacing: $font-letterspacing-neg-medium;
-	} @else if $size == 'large' {
+	}
+
+	@else if $size=='large' {
 		font-size: $font-size-large;
 		line-height: $font-lineheight-large;
 		letter-spacing: $font-letterspacing-neg-xlarge;
-	} @else {
+	}
+
+	@else {
 		font-size: $font-size-xlarge;
 		line-height: $font-lineheight-large;
 		letter-spacing: $font-letterspacing-neg-xlarge;

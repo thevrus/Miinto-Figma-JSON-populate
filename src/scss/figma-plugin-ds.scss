@@ -4,6 +4,7 @@
 @import 'base/mixins';
 
 //Components — customize this to import only the components you need
+@import 'components/assets';
 @import 'components/label';
 @import 'components/section-title';
 @import 'components/type';
@@ -18,6 +19,9 @@
 @import 'components/visual-bell';
 @import 'components/onboarding-tip';
 @import 'components/disclosure';
+@import 'components/details';
+@import 'components/tooltip';
+@import 'components/list';
 
 //master icon component
 @import 'components/icon';

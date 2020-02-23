@@ -1,28 +1,30 @@
-figma.showUI(__html__);
+figma.showUI(__html__, {
+  width: 300,
+  height: 276
+});
 
 figma.ui.onmessage = async msg => {
 
   if (msg.status === 200 && msg.response) {
 
     const response = await JSON.parse(msg.response);
+    const selectionsLength = figma.currentPage.selection.length;
     let list = response.products.list;
     let images = msg.images;
-    const selectionsLength = figma.currentPage.selection.length;
 
     function traverse(node, i) {
-      if (node.type === 'GROUP') {
-        for (const groupChild of node.children) traverse(groupChild, i);
+      const nodeType = node.type;
+
+      if (nodeType === 'GROUP' || nodeType === 'FRAME') {
+        for (const child of node.children) traverse(child, i);
+
       }
-      else if (node.type === "TEXT" && node.name.indexOf("$") === 0) {
+      else if (nodeType === "TEXT" && node.name.indexOf("$") === 0) {
         replaceText(node, i);
 
-      } else if (node.type === "RECTANGLE" && node.name.indexOf("$") === 0) {
+      } else if (nodeType === "RECTANGLE" && node.name.indexOf("$") === 0) {
         replaceImage(node, i)
       }
-    }
-
-    function closePlugin() {
-      figma.closePlugin();
     }
 
     async function replaceText(node, i) {
@@ -34,9 +36,10 @@ figma.ui.onmessage = async msg => {
     function replaceImage(node, i) {
       let data = images[i] as Uint8Array;
       let imageHash = figma.createImage(new Uint8Array(data)).hash;
+      let scaleMode = node.fills.scaleMode || "FIT";
 
       node.fills = [
-        { type: "IMAGE", scaleMode: "FILL", imageHash }
+        { type: "IMAGE", scaleMode: scaleMode, imageHash }
       ];
     }
 
@@ -69,11 +72,12 @@ figma.ui.onmessage = async msg => {
         i++;
       }
 
-      closePlugin();
+      const emojis = ['🤘', '🙌', '👌', '💅', '🎉', '🚀'];
+      const randomEmoji = emojis[emojis.length * Math.random() | 0];
+
+      figma.notify(`Updated ${selectionsLength} items ${randomEmoji}`);
     } else {
-      figma.ui.postMessage("Select frame or group");
+      figma.notify("Select at least one Frame or Group 👆");
     }
   }
-
-  closePlugin();
 };
