@@ -5,11 +5,10 @@ figma.showUI(__html__, {
 
 figma.ui.onmessage = async msg => {
 
-  if (msg.status === 200 && msg.response) {
+  if (msg.response.products.list.length > 0) {
 
-    const response = await JSON.parse(msg.response);
     const selectionsLength = figma.currentPage.selection.length;
-    let list = response.products.list;
+    let itemsList = msg.response.products.list;
     let images = msg.images;
 
     function traverse(node, i) {
@@ -30,7 +29,7 @@ figma.ui.onmessage = async msg => {
     async function replaceText(node, i) {
       let nodeName = node.name.replace("$", "");
       await figma.loadFontAsync(node.fontName);
-      node.characters = String(list[i][nodeName]);
+      node.characters = String(itemsList[i][nodeName]);
     }
 
     function replaceImage(node, i) {
@@ -45,9 +44,9 @@ figma.ui.onmessage = async msg => {
 
     if (selectionsLength > 0) {
       images.length = selectionsLength;
-      list.length = selectionsLength;
+      itemsList.length = selectionsLength;
 
-      list = list.map((item) => {
+      itemsList = itemsList.map((item) => {
         return {
           title: item.title,
           brand: item.brand,
@@ -63,7 +62,7 @@ figma.ui.onmessage = async msg => {
 
       let i = 0;
 
-      for (const node of figma.currentPage.selection) {
+      for (const node of figma.currentPage.selection as any) {
 
         for (const childNode of node.children) {
           traverse(childNode, i);
@@ -76,6 +75,7 @@ figma.ui.onmessage = async msg => {
       const randomEmoji = emojis[emojis.length * Math.random() | 0];
 
       figma.notify(`Updated ${selectionsLength} items ${randomEmoji}`);
+      figma.ui.postMessage("toggleSpinner");
     } else {
       figma.notify("Select at least one Frame or Group 👆");
     }

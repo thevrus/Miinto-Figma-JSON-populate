@@ -1,8 +1,8 @@
 import './scss/figma-plugin-ds.scss'
 
 const proxyurl = "https://figma-proxy-server.herokuapp.com/";
-const create = document.getElementById('create');
-const input = document.getElementById('link');
+const create = document.getElementById('create') as HTMLInputElement;
+const input = document.getElementById('link') as HTMLInputElement;
 let country = 'pl';
 
 // Wake up heroku server
@@ -12,7 +12,8 @@ let country = 'pl';
 
 // Click and copy
 (function () {
-    document.querySelector('.list.list--tags').addEventListener('click', (e) => {
+    document.querySelector('.list.list--tags').addEventListener('click', (e: any) => {
+
         if (e.target.classList.contains('list__list-item')) {
             const text = e.target.innerText
             const el = document.createElement('textarea');
@@ -34,8 +35,8 @@ let country = 'pl';
 (function () {
     const countries = document.querySelector('.list.list--countries');
 
-    input.addEventListener('change', (e) => {
-        if (e.target.value.length > 0) {
+    input.addEventListener('keyup', (e: any) => {
+        if (e.target.value.length !== 0) {
             countries.classList.add('disabled')
         } else {
             countries.classList.remove('disabled')
@@ -71,15 +72,13 @@ function notifyButton(text) {
 
 // Toggle spinner
 function toggleSpinner() {
-    const initialValue = create.innerText;
-
-    create.innerHTML = `<span class="loading-spinner"></span>`;
-    create.disabled = true;
-
-    setTimeout(() => {
+    if (!create.disabled) {
+        create.disabled = true;
+        create.innerHTML = `<span class="loading-spinner"></span>`;
+    } else {
         create.disabled = false;
-        create.innerText = initialValue;
-    }, 5000);
+        create.innerText = "Parse"
+    }
 };
 
 // Send on enter
@@ -108,39 +107,35 @@ create.onclick = () => {
 
     toggleSpinner();
 
-    // TODO Refactor this function
     (function () {
-        fetch(proxyurl + link, fetchParams).then((response) => {
-            return response.json();
-        }).then((resJson) => {
-            resJson.products.list.forEach(item => {
-                fetch(proxyurl + item.photo_url).then(response => {
-                    return response.arrayBuffer()
-                }).then(a => {
-                    return imgArray.push(new Uint8Array(a));
+        fetch(proxyurl + link, fetchParams)
+            .then((response) => {
+                return response.json();
+            }).then((result) => {
+                result.products.list.forEach(item => {
+                    fetch(proxyurl + item.photo_url).then(response => {
+                        return response.arrayBuffer()
+                    }).then(img => {
+                        return imgArray.push(new Uint8Array(img));
+                    });
                 });
+            }).then(() => {
+
+                fetch(proxyurl + link, fetchParams)
+                    .then(response => {
+                        return response.json();
+                    }).then(result => {
+                        parent.postMessage({
+                            pluginMessage: {
+                                response: result,
+                                images: imgArray
+                            }
+                        }, '*')
+                    });
             });
-        }).then(() => {
-            (function foo() {
-                const request = new XMLHttpRequest();
-
-                request.open('GET', proxyurl + link, true);
-                request.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
-                request.setRequestHeader('Content-Type', 'application/json');
-                request.setRequestHeader('Accept', '*/*');
-
-                request.onload = () => {
-
-                    parent.postMessage({
-                        pluginMessage: {
-                            response: request.response,
-                            images: imgArray,
-                            status: request.status
-                        }
-                    }, '*')
-                }
-                request.send()
-            })();
-        });
     })();
+}
+
+onmessage = (event) => {
+    if (event.data.pluginMessage === "toggleSpinner") toggleSpinner()
 }
