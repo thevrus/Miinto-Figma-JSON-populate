@@ -1,43 +1,46 @@
 .list {
-    margin: 12px 0;
-    padding: 0;
+  margin: 12px 0;
+  padding: 0;
 
-    @include font-ui-pos(medium, normal);
+  @include font-ui-pos(medium, normal);
 
-    &--countries {
-        display: flex;
-        justify-content: space-between;
+  &--countries {
+    display: flex;
+    justify-content: space-between;
+  }
+
+  &__list-item {
+    display: inline-block;
+    margin: 2px;
+    padding: 4px 8px;
+    position: relative;
+    cursor: pointer;
+    user-select: none;
+
+    color: #4b4b4b;
+    border: 1px solid $figma-grey;
+    border-radius: 20px;
+    cursor: pointer;
+    transition: background-color 0.3s, color 0.3s, border-color 0.3s;
+
+    input {
+      position: absolute;
+      width: 0;
+      height: 0;
+      opacity: 0;
+      visibility: hidden;
+      pointer-events: none;
+      appearance: none;
     }
 
-    &__list-item {
-        display: inline-block;
-        margin: 2px;
-        padding: 4px 8px;
-        position: relative;
-
-        cursor: pointer;
-        color: #4b4b4b;
-        border: 1px solid $figma-grey;
-        border-radius: 20px;
-        cursor: pointer;
-        transition: background-color .3s, color .3s, border-color .3s;
-
-        input {
-            cursor: pointer;
-            position: absolute;
-            width: 100%;
-            height: 100%;
-            opacity: 0;
-        }
-
-        &--checked {
-            border: 1px solid $figma-blue;
-        }
-
-        &:hover {
-            background-color: $figma-blue;
-            border-color: $figma-blue;
-            color: #ffffff;
-        }
+    &--checked {
+      border: 1px solid $figma-blue;
     }
+
+    &:hover {
+      background-color: $figma-blue;
+      border-color: $figma-blue;
+      color: #ffffff;
+    }
+  }
 }

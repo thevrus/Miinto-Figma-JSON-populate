@@ -5,9 +5,10 @@ figma.showUI(__html__, {
 
 figma.ui.onmessage = async msg => {
 
-  if (msg.response.products.list.length > 0) {
+  const selectionsLength = figma.currentPage.selection.length;
 
-    const selectionsLength = figma.currentPage.selection.length;
+  if (msg.type === "populate" && msg.response.products.list.length > 0) {
+
     let itemsList = msg.response.products.list;
     let images = msg.images;
 
@@ -76,8 +77,22 @@ figma.ui.onmessage = async msg => {
 
       figma.notify(`Updated ${selectionsLength} items ${randomEmoji}`);
       figma.ui.postMessage("toggleSpinner");
+
     } else {
       figma.notify("Select at least one Frame or Group 👆");
+    }
+
+  } else if (msg.type === "renameLayer") {
+
+    if (selectionsLength > 0) {
+
+      figma.currentPage.selection.forEach(layer => {
+        layer.name = msg.value;
+        figma.notify(`Changed name to: ${msg.value} 🖍`);
+      });
+
+    } else {
+      figma.notify("Select a layer to rename 👆");
     }
   }
 };

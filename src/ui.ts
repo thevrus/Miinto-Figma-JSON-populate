@@ -1,6 +1,6 @@
 import './scss/figma-plugin-ds.scss'
 
-const proxyurl = "https://figma-proxy-server.herokuapp.com/";
+const proxyurl = 'https://figma-proxy-server.herokuapp.com/';
 const create = document.getElementById('create') as HTMLInputElement;
 const input = document.getElementById('link') as HTMLInputElement;
 let country = 'pl';
@@ -10,23 +10,19 @@ let country = 'pl';
     fetch(proxyurl);
 })();
 
-// Click and copy
+// Rename layer
 (function () {
     document.querySelector('.list.list--tags').addEventListener('click', (e: any) => {
 
         if (e.target.classList.contains('list__list-item')) {
             const text = e.target.innerText
-            const el = document.createElement('textarea');
-            el.value = text;
-            el.setAttribute('readonly', '');
-            el.style.position = 'absolute';
-            el.style.left = '-9999px';
 
-            document.body.appendChild(el);
-            el.select();
-            document.execCommand('copy');
-            document.body.removeChild(el);
-            notifyButton(`${text} – copied`);
+            parent.postMessage({
+                pluginMessage: {
+                    type: 'renameLayer',
+                    value: text
+                }
+            }, '*');
         }
     });
 })();
@@ -66,7 +62,7 @@ function notifyButton(text) {
     // Copying initial text
     create.innerText = text;
     setTimeout(() => {
-        create.innerText = 'Parse';
+        create.innerText = 'Populate';
     }, 500);
 }
 
@@ -74,10 +70,10 @@ function notifyButton(text) {
 function toggleSpinner() {
     if (!create.disabled) {
         create.disabled = true;
-        create.innerHTML = `<span class="loading-spinner"></span>`;
+        create.innerHTML = `<span class='loading-spinner'></span>`;
     } else {
         create.disabled = false;
-        create.innerText = "Parse"
+        create.innerText = 'Populate'
     }
 };
 
@@ -127,15 +123,16 @@ create.onclick = () => {
                     }).then(result => {
                         parent.postMessage({
                             pluginMessage: {
+                                type: 'populate',
                                 response: result,
                                 images: imgArray
                             }
-                        }, '*')
+                        }, '*');
                     });
             });
     })();
 }
 
 onmessage = (event) => {
-    if (event.data.pluginMessage === "toggleSpinner") toggleSpinner()
+    if (event.data.pluginMessage === 'toggleSpinner') toggleSpinner()
 }
