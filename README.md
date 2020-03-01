@@ -3,6 +3,7 @@
 # Miinto JSON Populate
 
 A Figma plugin that populates your designs with real data that fetched from Miinto's website.
+
 *Note: This plugin built for internal usage, and unavailable in Figma's plugins store.*
 
 ## Installation

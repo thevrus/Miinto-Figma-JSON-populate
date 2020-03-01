@@ -89,7 +89,9 @@ function toggleSpinner() {
 
 // Send request
 create.onclick = () => {
-    const miintoLink = `https://www.miinto.${country}/guide-m?sort=popular%20desc`;
+    const miintoLink = `https://www.miinto.${country}/new-k`;
+    const link = input.value || miintoLink;
+    const imgArray = [];
     const fetchParams = {
         method: 'GET',
         headers: {
@@ -98,8 +100,6 @@ create.onclick = () => {
             'Accept': '*/*'
         }
     };
-    const link = input.value || miintoLink;
-    const imgArray = [];
 
     toggleSpinner();
 
@@ -107,25 +107,32 @@ create.onclick = () => {
         fetch(proxyurl + link, fetchParams)
             .then((response) => {
                 return response.json();
-            }).then((result) => {
-                result.products.list.forEach(item => {
-                    fetch(proxyurl + item.photo_url).then(response => {
-                        return response.arrayBuffer()
-                    }).then(img => {
-                        return imgArray.push(new Uint8Array(img));
-                    });
+            })
+            .then((result) => {
+
+                result.products.list.forEach((item, index) => {
+                    fetch(proxyurl + item.photo_url)
+                        .then(response => {
+                            return response.arrayBuffer()
+                        })
+                        .then(img => {
+                            imgArray[index] = new Uint8Array(img);
+                        });
                 });
-            }).then(() => {
+
+            })
+            .then(() => {
 
                 fetch(proxyurl + link, fetchParams)
                     .then(response => {
                         return response.json();
-                    }).then(result => {
+                    })
+                    .then(response => {
                         parent.postMessage({
                             pluginMessage: {
                                 type: 'populate',
-                                response: result,
-                                images: imgArray
+                                images: imgArray,
+                                response
                             }
                         }, '*');
                     });
