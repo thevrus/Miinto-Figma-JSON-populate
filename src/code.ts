@@ -1,6 +1,8 @@
+import { getRandomDate, getRandomTime, getRandomEmoji } from './utils';
+
 figma.showUI(__html__, {
   width: 300,
-  height: 276
+  height: 300
 });
 
 figma.ui.onmessage = async msg => {
@@ -57,7 +59,9 @@ figma.ui.onmessage = async msg => {
           url: item.url,
           id: item.id,
           meta_id: item.meta_id,
-          photo_url: item.photo_url
+          photo_url: item.photo_url,
+          date: getRandomDate(),
+          time: getRandomTime()
         }
       });
 
@@ -72,14 +76,12 @@ figma.ui.onmessage = async msg => {
         i++;
       }
 
-      const emojis = ['🤘', '🙌', '👌', '💅', '🎉', '🚀'];
-      const randomEmoji = emojis[emojis.length * Math.random() | 0];
-
-      figma.notify(`Updated ${selectionsLength} items ${randomEmoji}`);
+      figma.notify(`Updated ${selectionsLength} items ${getRandomEmoji()}`);
       figma.ui.postMessage("toggleSpinner");
 
     } else {
       figma.notify("Select at least one Frame or Group 👆");
+      figma.ui.postMessage("toggleSpinner");
     }
 
   } else if (msg.type === "renameLayer") {
@@ -94,5 +96,8 @@ figma.ui.onmessage = async msg => {
     } else {
       figma.notify("Select a layer to rename 👆");
     }
+  } else {
+    figma.notify("Something went wrong, sorry 😒");
+    figma.ui.postMessage("toggleSpinner");
   }
 };

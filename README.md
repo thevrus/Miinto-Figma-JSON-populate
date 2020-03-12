@@ -4,7 +4,7 @@
 
 A Figma plugin that populates your designs with real data that fetched from Miinto's website.
 
-*Note: This plugin built for internal usage, and unavailable in Figma's plugins store.*
+_Note: This plugin built for internal usage, and unavailable in Figma's plugins store._
 
 ## Installation
 
@@ -22,12 +22,14 @@ A Figma plugin that populates your designs with real data that fetched from Miin
 
 ### Available data
 
-* `$title` – Classic boxer
-* `$brand` – Tommy Hilfige
-* `$photo_url` – Product photo
-* `$id` – 26234503
-* `$price` – 30
-* `$price_before` – 20
-* `$discount_percent` – 40.15
-* `$url` – /p-26372508-classic-boxer
-* `$meta_id` – 61E8555C-6587-3EBB-143A-939DDA16ED1C
+- `$title` – Classic boxer
+- `$brand` – Tommy Hilfiger
+- `$photo_url` – Product photo
+- `$id` – 26234503
+- `$price` – 30
+- `$price_before` – 20
+- `$discount_percent` – 40.15
+- `$url` – /p-26372508-classic-boxer
+- `$meta_id` – 61E8555C-6587-3EBB-143A-939DDA16ED1C
+- `$date` – 12.03.2020 (Generated randomly)
+- `$time` – 17:56 (Generated randomly)

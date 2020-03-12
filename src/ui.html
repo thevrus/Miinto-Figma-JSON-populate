@@ -1,4 +1,7 @@
-<input id="link" type="input" class="input" placeholder="https://www.miinto.com" value="">
+<div class="search">
+  <input id="link" type="search" class="input" placeholder="Miinto link or Item name">
+  <ul class="search__list"></ul>
+</div>
 
 <section class="list list--countries">
   <label class="list__list-item list__list-item--checked" for="pl" data-tooltip="miinto.pl">🇵🇱
@@ -30,21 +33,22 @@
   </label>
 </section>
 
-<details class="details">
+<details class="details" open="true">
   <summary class="details__summary">Properties</summary>
   <ul class="list list--tags">
     <li class="list__list-item" data-tooltip="Classic boxer">$title</li>
     <li class="list__list-item" data-tooltip="Tommy Hilfiger">$brand</li>
-    <li class="list__list-item" data-tooltip="40.15">$discount_percent</li>
-    <li class="list__list-item" data-tooltip="132 $">$price</li>
+    <li class="list__list-item" data-tooltip="132 $">$price</li>
     <li class="list__list-item" data-tooltip="79 $">$price_before</li>
-    <li class="list__list-item" data-tooltip="/p-26372508-classic-boxer">$url</li>
+    <li class="list__list-item" data-tooltip="XXL">$size</li>
+    <li class="list__list-item" data-tooltip="Product photo">$photo_url</li>
+    <li class="list__list-item" data-tooltip="20.02.2020">$date</li>
+    <li class="list__list-item" data-tooltip="17:45">$time</li>
+    <li class="list__list-item" data-tooltip="40.15">$discount_percent</li>
     <li class="list__list-item" data-tooltip="26234503">$id</li>
     <li class="list__list-item" data-tooltip="61E8555C-6587-3EBB-143A-939DDA16ED1C">$meta_id</li>
-    <li class="list__list-item" data-tooltip="Product photo">$photo_url</li>
+    <li class="list__list-item" data-tooltip="/p-26372508-classic-boxer">$url</li>
   </ul>
 </details>
 
-<div class="buttons">
-  <button id="create" class='button button--primary button--fw'>Populate</button>
-</div>
+<button id="create" class='button button--primary button--fw'>Populate</button>
