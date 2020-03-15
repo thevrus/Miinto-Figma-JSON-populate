@@ -32,13 +32,27 @@ function toggleSpinner() {
 
 // Check server time responses
 (function () {
+    let isReceived = false;
+
     fetch(proxyurl)
         .then(({ status }) => {
-            if (status !== 200) proxyurl = corsAnywhere;
+            (status === 200) ? isReceived = true : proxyurl = corsAnywhere;
         })
-        .catch(() => {
+        .catch(() => proxyurl = corsAnywhere);
+
+    setTimeout(() => {
+        if (!isReceived) {
             proxyurl = corsAnywhere;
-        });
+            console.log('Server switched to: ', proxyurl);
+        }
+    }, 1500);
+
+    setTimeout(() => {
+        if (!isReceived) {
+            proxyurl = 'https://figma-proxy-server.herokuapp.com/';
+            console.log('Server switched back to: ', proxyurl);
+        }
+    }, 10000);
 })();
 
 // Rename layer
@@ -124,6 +138,7 @@ input.addEventListener('keyup', function (e) {
     }
 
     if (e.keyCode === 13) {
+        searchResults.classList.remove('search__list--block');
         event.preventDefault();
         create.click();
     }
@@ -142,7 +157,22 @@ document.querySelector('.list.list--countries').addEventListener('click', functi
             item.classList.remove('list__list-item--checked')
         }
     });
-})
+});
+
+// Select category
+document.querySelector('.list.list--categories').addEventListener('click', function () {
+    this.querySelectorAll('.list__list-item').forEach(item => {
+        const input = item.querySelector('input');
+
+        if (input.checked) {
+            item.classList.add('list__list-item--checked')
+            country = input.value;
+            notifyButton(`miinto.${country} – Selected`)
+        } else {
+            item.classList.remove('list__list-item--checked')
+        }
+    });
+});
 
 // Send request
 create.onclick = () => {

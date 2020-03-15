@@ -9,6 +9,11 @@
     justify-content: space-between;
   }
 
+  &--categories {
+    display: flex;
+    justify-content: space-evenly;
+  }
+
   &__list-item {
     display: inline-block;
     margin: 2px;

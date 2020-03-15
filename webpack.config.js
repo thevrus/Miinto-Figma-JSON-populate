@@ -13,13 +13,21 @@ module.exports = (env, argv) => ({
   },
 
   module: {
-    rules: [
-      { test: /\.tsx?$/, use: "ts-loader", exclude: /node_modules/ },
+    rules: [{
+        test: /\.tsx?$/,
+        use: "ts-loader",
+        exclude: /node_modules/
+      },
       {
         test: /\.s[ac]ss$/i,
         use: ["style-loader", "css-loader", "sass-loader"]
       },
-      { test: /\.(png|jpg|gif|webp|svg)$/, loader: [{ loader: "url-loader" }] }
+      {
+        test: /\.(png|jpg|gif|webp|svg)$/,
+        loader: [{
+          loader: "url-loader"
+        }]
+      }
     ]
   },
 

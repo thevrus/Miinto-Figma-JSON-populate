@@ -1,11 +1,13 @@
-import { getRandomDate, getRandomTime, getRandomEmoji } from './utils';
+import { getRandomDate, getRandomTime, getRandomOrder, getRandomGtin, getRandomEmoji } from './utils';
 
 figma.showUI(__html__, {
   width: 300,
-  height: 300
+  height: 336
 });
 
 figma.ui.onmessage = async msg => {
+
+  console.log(msg);
 
   const selectionsLength = figma.currentPage.selection.length;
 
@@ -41,7 +43,7 @@ figma.ui.onmessage = async msg => {
       let scaleMode = node.fills.scaleMode || "FIT";
 
       node.fills = [
-        { type: "IMAGE", scaleMode: scaleMode, imageHash }
+        { type: "IMAGE", scaleMode, imageHash }
       ];
     }
 
@@ -61,7 +63,9 @@ figma.ui.onmessage = async msg => {
           meta_id: item.meta_id,
           photo_url: item.photo_url,
           date: getRandomDate(),
-          time: getRandomTime()
+          time: getRandomTime(),
+          order_id: getRandomOrder(),
+          gtin_12: getRandomGtin()
         }
       });
 
