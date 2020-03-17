@@ -2,7 +2,7 @@ import { getRandomDate, getRandomTime, getRandomOrder, getRandomGtin, getRandomE
 
 figma.showUI(__html__, {
   width: 300,
-  height: 336
+  height: 372
 });
 
 figma.ui.onmessage = async msg => {

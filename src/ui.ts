@@ -1,15 +1,16 @@
 import './scss/figma-plugin-ds.scss'
 
-const input = document.getElementById('link') as HTMLInputElement;
+const input = document.getElementById('search-products') as HTMLInputElement;
 const countries = document.querySelector('.list.list--countries') as HTMLElement;
+const categories = document.querySelector('.list.list--categories') as HTMLElement;
 const create = document.getElementById('create') as HTMLInputElement;
 const searchResults = document.querySelector('.search__list') as HTMLElement;
 
 const corsAnywhere = 'https://cors-anywhere.herokuapp.com/';
 let proxyurl = 'https://figma-proxy-server.herokuapp.com/';
 let country = 'pl';
-let defaultLink = `https://www.miinto.${country}/new-k`;
-let link = defaultLink;
+let category = 'new-k';
+let search = '';
 
 // Display notification on button
 function notifyButton(text) {
@@ -21,12 +22,15 @@ function notifyButton(text) {
 
 // Toggle spinner
 function toggleSpinner() {
+    const main = document.querySelector('.main');
     if (!create.disabled) {
         create.disabled = true;
         create.innerHTML = `<span class='loading-spinner'></span>`;
+        main.classList.add('disabled');
     } else {
         create.disabled = false;
         create.innerText = 'Populate'
+        main.classList.remove('disabled');
     }
 };
 
@@ -72,7 +76,7 @@ function toggleSpinner() {
     });
 })();
 
-// Toggle spinner
+// Countries toggler
 (function () {
     input.addEventListener('keyup', (e: any) => {
         if (e.target.value.length !== 0) {
@@ -83,18 +87,22 @@ function toggleSpinner() {
     });
 })();
 
+// Clean search field
 input.addEventListener('search', () => {
     searchResults.classList.remove('search__list--block');
     countries.classList.remove('disabled');
+    categories.classList.remove('disabled');
 });
 
+// Input
 input.addEventListener('keyup', function (e) {
 
     if (this.value && !this.value.match('miinto.')) {
-        link = `https://www.miinto.${country}/search?q=${this.value}`;
+        search = `search?q=${this.value}`;
         let searchQuery = `https://www.miinto.${country}/actions/_get_search_suggestions.php?q=${input.value}`;
 
         countries.classList.remove('disabled');
+        categories.classList.add('disabled');
 
         if (this.value.length > 2) {
             searchResults.classList.add('search__list--block');
@@ -104,22 +112,20 @@ input.addEventListener('keyup', function (e) {
                 .then(result => {
                     searchResults.innerHTML = '';
 
-                    result.forEach(item => {
+                    result.forEach(({ terms, type }) => {
                         const li = document.createElement('li');
                         const span = document.createElement('span');
 
                         li.className = 'search__list-item';
-                        li.innerText = item.terms;
+                        li.innerText = terms;
 
                         span.className = 'search__list-span';
-                        span.innerText = item.type;
+                        span.innerText = type;
 
                         li.appendChild(span);
 
-                        li.addEventListener('click', function (e) {
-                            link = `https://www.miinto.${country}/search?q=${item.terms}`;
-                            input.value = item.terms;
-                            create.click();
+                        li.addEventListener('click', () => {
+                            input.value = terms;
                             searchResults.classList.remove('search__list--block');
                         });
 
@@ -133,8 +139,8 @@ input.addEventListener('keyup', function (e) {
         searchResults.classList.remove('search__list--block')
 
     } else {
-        link = defaultLink;
         searchResults.classList.remove('search__list--block')
+        categories.classList.remove('disabled');
     }
 
     if (e.keyCode === 13) {
@@ -145,13 +151,14 @@ input.addEventListener('keyup', function (e) {
 });
 
 // Select country
-document.querySelector('.list.list--countries').addEventListener('click', function () {
+countries.addEventListener('click', function () {
     this.querySelectorAll('.list__list-item').forEach(item => {
         const input = item.querySelector('input');
 
         if (input.checked) {
             item.classList.add('list__list-item--checked')
             country = input.value;
+
             notifyButton(`miinto.${input.value} – Selected`)
         } else {
             item.classList.remove('list__list-item--checked')
@@ -160,13 +167,14 @@ document.querySelector('.list.list--countries').addEventListener('click', functi
 });
 
 // Select category
-document.querySelector('.list.list--categories').addEventListener('click', function () {
+categories.addEventListener('click', function () {
     this.querySelectorAll('.list__list-item').forEach(item => {
         const input = item.querySelector('input');
 
         if (input.checked) {
             item.classList.add('list__list-item--checked')
-            country = input.value;
+            category = input.value;
+
             notifyButton(`miinto.${country} – Selected`)
         } else {
             item.classList.remove('list__list-item--checked')
@@ -176,8 +184,10 @@ document.querySelector('.list.list--categories').addEventListener('click', funct
 
 // Send request
 create.onclick = () => {
-    const request = link.replace(/ /g, '+');
-    let imgArray = [];
+    const request = (search.length > 0) ?
+        `https://www.miinto.${country}/${search}` :
+        `https://www.miinto.${country}/${category}`;
+
     const fetchParams = {
         method: 'GET',
         headers: {
@@ -187,7 +197,10 @@ create.onclick = () => {
         }
     };
 
+    let imgArray = [];
+
     toggleSpinner();
+    searchResults.classList.remove('search__list--block');
 
     fetch(proxyurl + request, fetchParams)
         .then((response) => {

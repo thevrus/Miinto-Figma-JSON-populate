@@ -1,74 +1,87 @@
-<div class="search">
-  <input id="link" type="search" class="input" placeholder="Miinto link or Item name">
-  <ul class="search__list"></ul>
+<div class="tabs">
+  <a class="tabs__link tabs__link--active" href="#products">Products</a>
+  <a class="tabs__link" href="#product">Product</a>
 </div>
 
-<section class="list list--categories">
-  <label class="list__list-item list__list-item--checked" for="pl">Women
-    <input id="pl" type="radio" value="pl" name="country" checked>
-  </label>
+<ul class="main">
+  <li class="products products--active" id="products">
+    <div class="search">
+      <input id="search-products" type="search" class="input" placeholder="Miinto link or Item name">
+      <ul class="search__list"></ul>
+    </div>
 
-  <label class="list__list-item" for="men">Men
-    <input id="men" type="radio" value="guide-m" name="men">
-  </label>
+    <section class="list list--categories">
 
-  <label class="list__list-item" for="dk">Kids
-    <input id="women" type="radio" value="guide-k" name="women">
-  </label>
+      <label class="list__list-item list__list-item--checked" for="women">Women
+        <input id="women" type="radio" value="new-k" name="category" checked>
+      </label>
 
-  <label class="list__list-item" for="dk">Sale
-    <input id="dk" type="radio" value="dk" name="country">
-  </label>
-</section>
+      <label class="list__list-item" for="men">Men
+        <input id="men" type="radio" value="new-m" name="category">
+      </label>
 
-<section class="list list--countries">
-  <label class="list__list-item list__list-item--checked" for="pl" data-tooltip="miinto.pl">🇵🇱
-    <input id="pl" type="radio" value="pl" name="country" checked>
-  </label>
+      <label class="list__list-item" for="kids">Kids
+        <input id="kids" type="radio" value="kids" name="category">
+      </label>
 
-  <label class="list__list-item" for="dk" data-tooltip="miinto.dk">🇩🇰
-    <input id="dk" type="radio" value="dk" name="country">
-  </label>
+      <label class="list__list-item" for="sale">Sale
+        <input id="sale" type="radio" value="sale-k" name="category">
+      </label>
 
-  <label class="list__list-item" for="no" data-tooltip="miinto.no">🇳🇴
-    <input id="no" type="radio" value="no" name="country">
-  </label>
+    </section>
 
-  <label class="list__list-item" for="se" data-tooltip="miinto.se">🇸🇪
-    <input id="se" type="radio" value="se" name="country">
-  </label>
+    <section class="list list--countries">
 
-  <label class="list__list-item" for="nl" data-tooltip="miinto.nl">🇳🇱
-    <input id="nl" type="radio" value="nl" name="country">
-  </label>
+      <label class="list__list-item list__list-item--checked" for="pl" data-tooltip="miinto.pl">🇵🇱
+        <input id="pl" type="radio" value="pl" name="country" checked>
+      </label>
 
-  <label class="list__list-item" for="be" data-tooltip="miinto.be">🇧🇪
-    <input id="be" type="radio" value="be" name="country">
-  </label>
+      <label class="list__list-item" for="dk" data-tooltip="miinto.dk">🇩🇰
+        <input id="dk" type="radio" value="dk" name="country">
+      </label>
 
-  <label class="list__list-item" for="ch" data-tooltip="miinto.ch">🇨🇭
-    <input id="ch" type="radio" value="ch" name="country">
-  </label>
-</section>
+      <label class="list__list-item" for="no" data-tooltip="miinto.no">🇳🇴
+        <input id="no" type="radio" value="no" name="country">
+      </label>
 
-<details class="details" open="true">
-  <summary class="details__summary">Properties</summary>
-  <ul class="list list--tags">
-    <li class="list__list-item" data-tooltip="Classic boxer">$title</li>
-    <li class="list__list-item" data-tooltip="Tommy Hilfiger">$brand</li>
-    <li class="list__list-item" data-tooltip="132 $">$price</li>
-    <li class="list__list-item" data-tooltip="79 $">$price_before</li>
-    <li class="list__list-item" data-tooltip="XXL">$size</li>
-    <li class="list__list-item" data-tooltip="Product photo">$photo_url</li>
-    <li class="list__list-item" data-tooltip="20.02.2020">$date</li>
-    <li class="list__list-item" data-tooltip="17:45">$time</li>
-    <li class="list__list-item" data-tooltip="40.15">$discount_percent</li>
-    <li class="list__list-item" data-tooltip="61E8555C-6587-3EBB-143A-939DDA16ED1C">$meta_id</li>
-    <li class="list__list-item" data-tooltip="26234503">$id</li>
-    <li class="list__list-item" data-tooltip="54231">$order_id</li>
-    <li class="list__list-item" data-tooltip="571307373373">$gtin_12</li>
-    <li class="list__list-item" data-tooltip="/p-26372508-classic-boxer">$url</li>
-  </ul>
-</details>
+      <label class="list__list-item" for="se" data-tooltip="miinto.se">🇸🇪
+        <input id="se" type="radio" value="se" name="country">
+      </label>
 
-<button id="create" class='button button--primary button--fw'>Populate</button>
+      <label class="list__list-item" for="nl" data-tooltip="miinto.nl">🇳🇱
+        <input id="nl" type="radio" value="nl" name="country">
+      </label>
+
+      <label class="list__list-item" for="be" data-tooltip="miinto.be">🇧🇪
+        <input id="be" type="radio" value="be" name="country">
+      </label>
+
+      <label class="list__list-item" for="ch" data-tooltip="miinto.ch">🇨🇭
+        <input id="ch" type="radio" value="ch" name="country">
+      </label>
+
+    </section>
+
+    <details class="details" open="true">
+      <summary class="details__summary">Properties</summary>
+      <ul class="list list--tags">
+        <li class="list__list-item" data-tooltip="Classic boxer">$title</li>
+        <li class="list__list-item" data-tooltip="Tommy Hilfiger">$brand</li>
+        <li class="list__list-item" data-tooltip="132 $">$price</li>
+        <li class="list__list-item" data-tooltip="79 $">$price_before</li>
+        <li class="list__list-item" data-tooltip="XXL">$size</li>
+        <li class="list__list-item" data-tooltip="Product photo">$photo_url</li>
+        <li class="list__list-item" data-tooltip="20.02.2020">$date</li>
+        <li class="list__list-item" data-tooltip="17:45">$time</li>
+        <li class="list__list-item" data-tooltip="40.15">$discount_percent</li>
+        <li class="list__list-item" data-tooltip="61E8555C-6587-3EBB-143A-939DDA16ED1C">$meta_id</li>
+        <li class="list__list-item" data-tooltip="26234503">$id</li>
+        <li class="list__list-item" data-tooltip="54231">$order_id</li>
+        <li class="list__list-item" data-tooltip="571307373373">$gtin_12</li>
+        <li class="list__list-item" data-tooltip="/p-26372508-classic-boxer">$url</li>
+      </ul>
+    </details>
+
+    <button id="create" class='button button--primary button--fw'>Populate</button>
+  </li>
+</ul>

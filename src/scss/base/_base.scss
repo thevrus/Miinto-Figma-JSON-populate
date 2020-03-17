@@ -13,5 +13,13 @@
 }
 
 body {
+  margin: 0;
+  padding: 0;
   overflow: hidden;
+}
+
+ul {
+  padding: 0 8px;
+  margin: 0;
+  list-style: none;
 }
