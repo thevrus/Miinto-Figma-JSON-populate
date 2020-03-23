@@ -1,21 +1,21 @@
 ::-webkit-scrollbar {
-  -webkit-appearance: none;
-  width: 6px;
-  height: 6px;
+    -webkit-appearance: none;
+    width: 6px;
+    height: 6px;
 }
 
 ::-webkit-scrollbar-thumb {
-  border-radius: 8px;
-  background-color: #d7d7d7;
+    border-radius: 8px;
+    background-color: #d7d7d7;
 }
 
 * {
-  box-sizing: border-box;
+    box-sizing: border-box;
 }
 
 body {
-  margin: 0;
-  padding: 0;
-  overflow: hidden;
-  user-select: none;
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
+    user-select: none;
 }

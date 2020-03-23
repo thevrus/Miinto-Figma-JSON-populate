@@ -1,52 +1,52 @@
 .list {
-  margin: 12px 0;
-  padding: 0;
-  margin-bottom: 11px;
+    margin: 12px 0;
+    padding: 0;
+    margin-bottom: 11px;
 
-  @include font-ui-pos(medium, normal);
+    @include font-ui-pos(medium, normal);
 
-  &--countries {
-    display: flex;
-    justify-content: space-between;
-  }
-
-  &--categories {
-    display: flex;
-    justify-content: space-evenly;
-  }
-
-  &__list-item {
-    display: inline-block;
-    margin: 2px;
-    padding: 4px 8px;
-    position: relative;
-    cursor: pointer;
-    user-select: none;
-
-    color: #4b4b4b;
-    border: 1px solid $figma-grey;
-    border-radius: 20px;
-    cursor: pointer;
-    transition: background-color 0.3s, color 0.3s, border-color 0.3s;
-
-    input {
-      position: absolute;
-      width: 0;
-      height: 0;
-      opacity: 0;
-      visibility: hidden;
-      pointer-events: none;
-      appearance: none;
+    &--countries {
+        display: flex;
+        justify-content: space-between;
     }
 
-    &--checked {
-      border: 1px solid $figma-blue;
+    &--categories {
+        display: flex;
+        justify-content: space-evenly;
     }
 
-    &:hover {
-      background-color: $figma-blue;
-      border-color: $figma-blue;
-      color: #ffffff;
+    &__list-item {
+        display: inline-block;
+        margin: 2px;
+        padding: 4px 8px;
+        position: relative;
+        cursor: pointer;
+        user-select: none;
+
+        color: #4b4b4b;
+        border: 1px solid $figma-grey;
+        border-radius: 20px;
+        cursor: pointer;
+        transition: background-color 0.3s, color 0.3s, border-color 0.3s;
+
+        input {
+            position: absolute;
+            width: 0;
+            height: 0;
+            opacity: 0;
+            visibility: hidden;
+            pointer-events: none;
+            appearance: none;
+        }
+
+        &--checked {
+            border: 1px solid $figma-blue;
+        }
+
+        &:hover {
+            background-color: $figma-blue;
+            border-color: $figma-blue;
+            color: #ffffff;
+        }
     }
-  }
 }

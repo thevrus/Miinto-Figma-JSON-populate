@@ -4,18 +4,14 @@ const properties = document.querySelector('.properties') as HTMLElement;
 const propertiesPhotos = document.querySelector('.properties__photos') as HTMLElement;
 const cors = 'https://figma-proxy-server.herokuapp.com/';
 
-textbox.addEventListener('keyup', function (e) {
-    (e.keyCode === 13) && product.click();
+textbox.addEventListener('keyup', function(e) {
+    e.keyCode === 13 && product.click();
 
-    (this.value.match('miinto.')) ?
-        product.disabled = false :
-        product.disabled = true;
+    this.value.match('miinto.') ? (product.disabled = false) : (product.disabled = true);
 });
 
-textbox.addEventListener('search', function () {
-    (this.value.match('miinto.')) ?
-        product.disabled = false :
-        product.disabled = true;
+textbox.addEventListener('search', function() {
+    this.value.match('miinto.') ? (product.disabled = false) : (product.disabled = true);
 });
 
 product.onclick = () => {
@@ -28,7 +24,6 @@ product.onclick = () => {
     fetch(reqlink)
         .then(res => res.text())
         .then(textHtml => {
-
             let html = document.createElement('html');
             html.innerHTML = textHtml;
 
@@ -45,7 +40,6 @@ product.onclick = () => {
             }
 
             if ($('.p-product-page__product-name') !== null) {
-
                 imagesList.innerHTML = '';
                 propertiesList.innerHTML = '';
 
@@ -58,7 +52,9 @@ product.onclick = () => {
 
                 function appendValue(item, description) {
                     const p = document.createElement('p');
-                    p.innerHTML = `${description ? description : ''}: <span>${item.value}</span>`;
+                    p.innerHTML = `${description ? description : ''}: <span>${
+                        item.value
+                    }</span>`;
                     propertiesList.appendChild(p);
                 }
 
@@ -68,20 +64,20 @@ product.onclick = () => {
 
                     imagesList.appendChild(img);
 
-                    img.addEventListener('click', function () {
-                        console.log('Replace image');
-
+                    img.addEventListener('click', function() {
                         fetch(cors + item)
                             .then(response => response.arrayBuffer())
-                            .then((result) => {
-                                parent.postMessage({
-                                    pluginMessage:
+                            .then(result => {
+                                parent.postMessage(
                                     {
-                                        type: 'replace-img',
-                                        value: new Uint8Array(result)
-                                    }
-                                }, "*")
-                            })
+                                        pluginMessage: {
+                                            type: 'replace-img',
+                                            value: new Uint8Array(result)
+                                        }
+                                    },
+                                    '*'
+                                );
+                            });
                     });
                 }
 
@@ -125,15 +121,15 @@ product.onclick = () => {
                         selector: '.p-product-page__product-description-counter',
                         label: 'Description'
                     }
-                ]
+                ];
 
-                selectors.forEach((item) => {
+                selectors.forEach(item => {
                     const tag = $(item.selector);
                     const label = item.label;
 
-                    item.hasOwnProperty('value') ?
-                        appendValue(tag, label) :
-                        appendItem(tag, item.label)
+                    item.hasOwnProperty('value')
+                        ? appendValue(tag, label)
+                        : appendItem(tag, item.label);
                 });
 
                 const sizes = $('.c-product-select__size');
@@ -160,24 +156,27 @@ product.onclick = () => {
 
                 properties.querySelectorAll('p').forEach(item => {
                     item.addEventListener('click', () => {
-
-                        parent.postMessage({
-                            pluginMessage:
+                        parent.postMessage(
                             {
-                                type: 'replace-text',
-                                value: item.querySelector('span').innerText
-                            }
-                        }, '*');
-                    })
+                                pluginMessage: {
+                                    type: 'replace-text',
+                                    value: item.querySelector('span').innerText
+                                }
+                            },
+                            '*'
+                        );
+                    });
                 });
             } else {
-                parent.postMessage({
-                    pluginMessage:
+                parent.postMessage(
                     {
-                        type: 'notify',
-                        value: "Try another link 🤓"
-                    }
-                }, '*');
+                        pluginMessage: {
+                            type: 'notify',
+                            value: 'Try another link 🤓'
+                        }
+                    },
+                    '*'
+                );
             }
         });
-}
+};

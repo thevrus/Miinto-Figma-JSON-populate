@@ -1,25 +1,25 @@
 .tabs {
-  display: flex;
-  margin-bottom: 1rem;
+    display: flex;
+    margin-bottom: 1rem;
 
-  &__link {
-    width: 100%;
-    padding: 0.6rem 8px;
-    cursor: pointer;
+    &__link {
+        width: 100%;
+        padding: 0.6rem 8px;
+        cursor: pointer;
 
-    color: #c2c2c2;
-    @include font-ui-pos("small", "medium");
-    text-align: center;
-    text-decoration: none;
-    border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+        color: #c2c2c2;
+        @include font-ui-pos('small', 'medium');
+        text-align: center;
+        text-decoration: none;
+        border-bottom: 1px solid rgba(0, 0, 0, 0.1);
 
-    &:hover {
-      color: $figma-black;
+        &:hover {
+            color: $figma-black;
+        }
+
+        &--active {
+            @include font-ui-pos('small', 'bold');
+            color: $figma-black;
+        }
     }
-
-    &--active {
-      @include font-ui-pos("small", "bold");
-      color: $figma-black;
-    }
-  }
 }

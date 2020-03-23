@@ -29,8 +29,8 @@
         display: flex;
         justify-content: space-between;
 
-        transition: background-color .3s, color .3s;
-        @include font-ui-pos("small", "medium");
+        transition: background-color 0.3s, color 0.3s;
+        @include font-ui-pos('small', 'medium');
 
         &:hover {
             background-color: $figma-blue;
@@ -44,6 +44,6 @@
     }
 
     &__list-span {
-        color: #BABABA;
+        color: #bababa;
     }
 }

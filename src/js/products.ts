@@ -29,61 +29,61 @@ function toggleSpinner() {
         tabs.classList.add('disabled--wawing');
     } else {
         create.disabled = false;
-        create.innerText = 'Populate'
+        create.innerText = 'Populate';
         main.classList.remove('disabled--wawing');
         tabs.classList.remove('disabled--wawing');
     }
-};
+}
 
 // Check server time responses
-(function () {
+(function() {
     let isReceived = false;
 
     fetch(proxyurl)
         .then(({ status }) => {
-            (status === 200) ? isReceived = true : proxyurl = corsAnywhere;
+            status === 200 ? (isReceived = true) : (proxyurl = corsAnywhere);
         })
-        .catch(() => proxyurl = corsAnywhere);
+        .catch(() => (proxyurl = corsAnywhere));
 
     setTimeout(() => {
         if (!isReceived) {
             proxyurl = corsAnywhere;
-            console.log('Server switched to: ', proxyurl);
         }
     }, 1500);
 
     setTimeout(() => {
         if (!isReceived) {
             proxyurl = 'https://figma-proxy-server.herokuapp.com/';
-            console.log('Server switched back to: ', proxyurl);
         }
     }, 10000);
 })();
 
 // Rename layer
-(function () {
+(function() {
     document.querySelector('.list.list--tags').addEventListener('click', (e: any) => {
-
         if (e.target.classList.contains('list__list-item')) {
-            const text = e.target.innerText
+            const text = e.target.innerText;
 
-            parent.postMessage({
-                pluginMessage: {
-                    type: 'rename-layer',
-                    value: text
-                }
-            }, '*');
+            parent.postMessage(
+                {
+                    pluginMessage: {
+                        type: 'rename-layer',
+                        value: text
+                    }
+                },
+                '*'
+            );
         }
     });
 })();
 
 // Countries toggler
-(function () {
+(function() {
     input.addEventListener('keyup', (e: any) => {
         if (e.target.value.length !== 0) {
-            countries.classList.add('disabled')
+            countries.classList.add('disabled');
         } else {
-            countries.classList.remove('disabled')
+            countries.classList.remove('disabled');
         }
     });
 })();
@@ -96,8 +96,7 @@ input.addEventListener('search', () => {
 });
 
 // Input
-input.addEventListener('keyup', function (e) {
-
+input.addEventListener('keyup', function(e) {
     if (this.value && !this.value.match('miinto.')) {
         search = `search?q=${this.value}`;
         let searchQuery = `https://www.miinto.${country}/actions/_get_search_suggestions.php?q=${input.value}`;
@@ -134,13 +133,11 @@ input.addEventListener('keyup', function (e) {
                     });
                 });
         }
-
     } else if (this.value && this.value.match('miinto.')) {
-        countries.classList.add('disabled')
-        searchResults.classList.remove('search__list--block')
-
+        countries.classList.add('disabled');
+        searchResults.classList.remove('search__list--block');
     } else {
-        searchResults.classList.remove('search__list--block')
+        searchResults.classList.remove('search__list--block');
         categories.classList.remove('disabled');
     }
 
@@ -151,46 +148,47 @@ input.addEventListener('keyup', function (e) {
 });
 
 // Select country
-countries.addEventListener('click', function () {
+countries.addEventListener('click', function() {
     this.querySelectorAll('.list__list-item').forEach(item => {
         const input = item.querySelector('input');
 
         if (input.checked) {
-            item.classList.add('list__list-item--checked')
+            item.classList.add('list__list-item--checked');
             country = input.value;
 
-            notifyButton(`miinto.${input.value} – Selected`)
+            notifyButton(`miinto.${input.value} – Selected`);
         } else {
-            item.classList.remove('list__list-item--checked')
+            item.classList.remove('list__list-item--checked');
         }
     });
 });
 
 // Select category
-categories.addEventListener('click', function () {
+categories.addEventListener('click', function() {
     this.querySelectorAll('.list__list-item').forEach(item => {
         const input = item.querySelector('input');
 
         if (input.checked) {
-            item.classList.add('list__list-item--checked')
+            item.classList.add('list__list-item--checked');
             category = input.value;
         } else {
-            item.classList.remove('list__list-item--checked')
+            item.classList.remove('list__list-item--checked');
         }
     });
 });
 
 function populateItems() {
-    const request = (search.length > 0) ?
-        `https://www.miinto.${country}/${search}` :
-        `https://www.miinto.${country}/${category}`;
+    const request =
+        search.length > 0
+            ? `https://www.miinto.${country}/${search}`
+            : `https://www.miinto.${country}/${category}`;
 
     const fetchParams = {
         method: 'GET',
         headers: {
             'X-Requested-With': 'XMLHttpRequest',
             'Content-Type': 'application/json',
-            'Accept': '*/*'
+            Accept: '*/*'
         }
     };
 
@@ -200,41 +198,46 @@ function populateItems() {
     searchResults.classList.remove('search__list--block');
 
     fetch(proxyurl + request, fetchParams)
-        .then((response) => {
+        .then(response => {
             return response.json();
         })
-        .then((result) => {
+        .then(result => {
             result.products.list.forEach((item, index) => {
                 fetch(proxyurl + item.photo_url)
                     .then(response => response.arrayBuffer())
-                    .then(img => imgArray[index] = new Uint8Array(img));
+                    .then(img => (imgArray[index] = new Uint8Array(img)));
             });
-
         })
         .then(() => {
             fetch(proxyurl + request, fetchParams)
                 .then(response => response.json())
                 .then(response => {
-                    parent.postMessage({
-                        pluginMessage: {
-                            type: 'populate',
-                            images: imgArray,
-                            response
-                        }
-                    }, '*');
+                    parent.postMessage(
+                        {
+                            pluginMessage: {
+                                type: 'populate',
+                                images: imgArray,
+                                response
+                            }
+                        },
+                        '*'
+                    );
                 });
         });
 }
 
 create.onclick = () => {
-    parent.postMessage({
-        pluginMessage: {
-            type: 'check-selection'
-        }
-    }, '*')
-}
+    parent.postMessage(
+        {
+            pluginMessage: {
+                type: 'check-selection'
+            }
+        },
+        '*'
+    );
+};
 
-onmessage = (event) => {
+onmessage = event => {
     switch (event.data.pluginMessage) {
         case 'toggleSpinner':
             toggleSpinner();
@@ -244,4 +247,4 @@ onmessage = (event) => {
             populateItems();
             break;
     }
-}
+};

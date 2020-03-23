@@ -1,6 +1,9 @@
 // TODO
 export function getRandomDate() {
-    return new Date(Math.random()).toISOString().substr(0, 10).replace(/-/g, '.')
+    return new Date(Math.random())
+        .toISOString()
+        .substr(0, 10)
+        .replace(/-/g, '.');
 }
 
 // TODO
@@ -18,5 +21,5 @@ export function getRandomGtin() {
 
 export function getRandomEmoji() {
     const emojis = ['🤘', '🙌', '👌', '💅', '🎉', '🚀'];
-    return emojis[emojis.length * Math.random() | 0];
+    return emojis[(emojis.length * Math.random()) | 0];
 }
