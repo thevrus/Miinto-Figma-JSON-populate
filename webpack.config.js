@@ -8,8 +8,8 @@ module.exports = (env, argv) => ({
   devtool: argv.mode === "production" ? false : "inline-source-map",
 
   entry: {
-    ui: "./src/ui.ts",
-    code: "./src/code.ts"
+    ui: "./src/js/ui.ts",
+    code: "./src/js/code.ts"
   },
 
   module: {

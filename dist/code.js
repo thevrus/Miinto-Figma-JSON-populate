@@ -1,1 +1,273 @@
-!function(e){var t={};function n(o){if(t[o])return t[o].exports;var r=t[o]={i:o,l:!1,exports:{}};return e[o].call(r.exports,r,r.exports,n),r.l=!0,r.exports}n.m=e,n.c=t,n.d=function(e,t,o){n.o(e,t)||Object.defineProperty(e,t,{enumerable:!0,get:o})},n.r=function(e){"undefined"!=typeof Symbol&&Symbol.toStringTag&&Object.defineProperty(e,Symbol.toStringTag,{value:"Module"}),Object.defineProperty(e,"__esModule",{value:!0})},n.t=function(e,t){if(1&t&&(e=n(e)),8&t)return e;if(4&t&&"object"==typeof e&&e&&e.__esModule)return e;var o=Object.create(null);if(n.r(o),Object.defineProperty(o,"default",{enumerable:!0,value:e}),2&t&&"string"!=typeof e)for(var r in e)n.d(o,r,function(t){return e[t]}.bind(null,r));return o},n.n=function(e){var t=e&&e.__esModule?function(){return e.default}:function(){return e};return n.d(t,"a",t),t},n.o=function(e,t){return Object.prototype.hasOwnProperty.call(e,t)},n.p="",n(n.s=5)}({5:function(e,t,n){"use strict";function o(){const e=new Date;return`${e.getHours()}:${e.getMinutes()}`}n.r(t);var r=function(e,t,n,o){return new(n||(n=Promise))((function(r,i){function a(e){try{f(o.next(e))}catch(e){i(e)}}function c(e){try{f(o.throw(e))}catch(e){i(e)}}function f(e){var t;e.done?r(e.value):(t=e.value,t instanceof n?t:new n((function(e){e(t)}))).then(a,c)}f((o=o.apply(e,t||[])).next())}))};figma.showUI(__html__,{width:300,height:372}),figma.ui.onmessage=e=>r(void 0,void 0,void 0,(function*(){console.log(e);const t=figma.currentPage.selection.length;if("populate"===e.type&&e.response.products.list.length>0){let i=e.response.products.list,a=e.images;function n(e,t){const o=e.type;if("GROUP"===o||"FRAME"===o)for(const o of e.children)n(o,t);else"TEXT"===o&&0===e.name.indexOf("$")?function(e,t){r(this,void 0,void 0,(function*(){let n=e.name.replace("$","");yield figma.loadFontAsync(e.fontName),e.characters=String(i[t][n])}))}(e,t):"RECTANGLE"===o&&0===e.name.indexOf("$")&&function(e,t){let n=a[t],o=figma.createImage(new Uint8Array(n)).hash,r=e.fills.scaleMode||"FIT";e.fills=[{type:"IMAGE",scaleMode:r,imageHash:o}]}(e,t)}if(t>0){a.length=t,i.length=t,i=i.map(e=>({title:e.title,brand:e.brand,discount_percent:e.discount_percent,price:e.price.price,price_before:e.price.price_before,url:e.url,id:e.id,meta_id:e.meta_id,photo_url:e.photo_url,date:new Date(Math.random()).toISOString().substr(0,10).replace(/-/g,"."),time:o(),order_id:Math.floor(9999*Math.random())+9999,gtin_12:Math.floor(1e9*Math.random())+99999999999}));let e=0;for(const t of figma.currentPage.selection){for(const o of t.children)n(o,e);e++}figma.notify(`Updated ${t} items ${function(){const e=["🤘","🙌","👌","💅","🎉","🚀"];return e[e.length*Math.random()|0]}()}`),figma.ui.postMessage("toggleSpinner")}else figma.notify("Select at least one Frame or Group 👆"),figma.ui.postMessage("toggleSpinner")}else"renameLayer"===e.type?t>0?figma.currentPage.selection.forEach(t=>{t.name=e.value,figma.notify(`Changed name to: ${e.value} 🖍`)}):figma.notify("Select a layer to rename 👆"):(figma.notify("Something went wrong, sorry 😒"),figma.ui.postMessage("toggleSpinner"))}))}});
+/******/ (function(modules) { // webpackBootstrap
+/******/ 	// The module cache
+/******/ 	var installedModules = {};
+/******/
+/******/ 	// The require function
+/******/ 	function __webpack_require__(moduleId) {
+/******/
+/******/ 		// Check if module is in cache
+/******/ 		if(installedModules[moduleId]) {
+/******/ 			return installedModules[moduleId].exports;
+/******/ 		}
+/******/ 		// Create a new module (and put it into the cache)
+/******/ 		var module = installedModules[moduleId] = {
+/******/ 			i: moduleId,
+/******/ 			l: false,
+/******/ 			exports: {}
+/******/ 		};
+/******/
+/******/ 		// Execute the module function
+/******/ 		modules[moduleId].call(module.exports, module, module.exports, __webpack_require__);
+/******/
+/******/ 		// Flag the module as loaded
+/******/ 		module.l = true;
+/******/
+/******/ 		// Return the exports of the module
+/******/ 		return module.exports;
+/******/ 	}
+/******/
+/******/
+/******/ 	// expose the modules object (__webpack_modules__)
+/******/ 	__webpack_require__.m = modules;
+/******/
+/******/ 	// expose the module cache
+/******/ 	__webpack_require__.c = installedModules;
+/******/
+/******/ 	// define getter function for harmony exports
+/******/ 	__webpack_require__.d = function(exports, name, getter) {
+/******/ 		if(!__webpack_require__.o(exports, name)) {
+/******/ 			Object.defineProperty(exports, name, { enumerable: true, get: getter });
+/******/ 		}
+/******/ 	};
+/******/
+/******/ 	// define __esModule on exports
+/******/ 	__webpack_require__.r = function(exports) {
+/******/ 		if(typeof Symbol !== 'undefined' && Symbol.toStringTag) {
+/******/ 			Object.defineProperty(exports, Symbol.toStringTag, { value: 'Module' });
+/******/ 		}
+/******/ 		Object.defineProperty(exports, '__esModule', { value: true });
+/******/ 	};
+/******/
+/******/ 	// create a fake namespace object
+/******/ 	// mode & 1: value is a module id, require it
+/******/ 	// mode & 2: merge all properties of value into the ns
+/******/ 	// mode & 4: return value when already ns object
+/******/ 	// mode & 8|1: behave like require
+/******/ 	__webpack_require__.t = function(value, mode) {
+/******/ 		if(mode & 1) value = __webpack_require__(value);
+/******/ 		if(mode & 8) return value;
+/******/ 		if((mode & 4) && typeof value === 'object' && value && value.__esModule) return value;
+/******/ 		var ns = Object.create(null);
+/******/ 		__webpack_require__.r(ns);
+/******/ 		Object.defineProperty(ns, 'default', { enumerable: true, value: value });
+/******/ 		if(mode & 2 && typeof value != 'string') for(var key in value) __webpack_require__.d(ns, key, function(key) { return value[key]; }.bind(null, key));
+/******/ 		return ns;
+/******/ 	};
+/******/
+/******/ 	// getDefaultExport function for compatibility with non-harmony modules
+/******/ 	__webpack_require__.n = function(module) {
+/******/ 		var getter = module && module.__esModule ?
+/******/ 			function getDefault() { return module['default']; } :
+/******/ 			function getModuleExports() { return module; };
+/******/ 		__webpack_require__.d(getter, 'a', getter);
+/******/ 		return getter;
+/******/ 	};
+/******/
+/******/ 	// Object.prototype.hasOwnProperty.call
+/******/ 	__webpack_require__.o = function(object, property) { return Object.prototype.hasOwnProperty.call(object, property); };
+/******/
+/******/ 	// __webpack_public_path__
+/******/ 	__webpack_require__.p = "";
+/******/
+/******/
+/******/ 	// Load entry module and return exports
+/******/ 	return __webpack_require__(__webpack_require__.s = "./src/js/code.ts");
+/******/ })
+/************************************************************************/
+/******/ ({
+
+/***/ "./src/js/code.ts":
+/*!************************!*\
+  !*** ./src/js/code.ts ***!
+  \************************/
+/*! no exports provided */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _utils__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./utils */ "./src/js/utils.ts");
+var __awaiter = (undefined && undefined.__awaiter) || function (thisArg, _arguments, P, generator) {
+    function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
+    return new (P || (P = Promise))(function (resolve, reject) {
+        function fulfilled(value) { try { step(generator.next(value)); } catch (e) { reject(e); } }
+        function rejected(value) { try { step(generator["throw"](value)); } catch (e) { reject(e); } }
+        function step(result) { result.done ? resolve(result.value) : adopt(result.value).then(fulfilled, rejected); }
+        step((generator = generator.apply(thisArg, _arguments || [])).next());
+    });
+};
+
+figma.showUI(__html__, {
+    width: 300,
+    height: 372
+});
+figma.ui.onmessage = (msg) => __awaiter(void 0, void 0, void 0, function* () {
+    const selections = figma.currentPage.selection;
+    const selectionsLength = selections.length;
+    switch (msg.type) {
+        case 'check-selection':
+            if (selectionsLength > 0) {
+                figma.ui.postMessage("populate");
+            }
+            else {
+                figma.notify("Select at least one Frame or Group 👆");
+            }
+            break;
+        case 'populate':
+            if (msg.response.products.list.length > 0) {
+                let itemsList = msg.response.products.list;
+                let images = msg.images;
+                function traverse(node, i) {
+                    const nodeType = node.type;
+                    if (nodeType === 'GROUP' || nodeType === 'FRAME') {
+                        for (const child of node.children)
+                            traverse(child, i);
+                    }
+                    else if (nodeType === "TEXT" && node.name.indexOf("$") === 0) {
+                        replaceText(node, i);
+                    }
+                    else if (nodeType === "RECTANGLE" && node.name.indexOf("$") === 0) {
+                        replaceImage(node, i);
+                    }
+                }
+                function replaceText(node, i) {
+                    return __awaiter(this, void 0, void 0, function* () {
+                        let nodeName = node.name.replace("$", "");
+                        yield figma.loadFontAsync(node.fontName);
+                        node.characters = String(itemsList[i][nodeName]);
+                    });
+                }
+                function replaceImage(node, i) {
+                    let imageHash = figma.createImage(new Uint8Array(images[i])).hash;
+                    let scaleMode = node.fills.scaleMode || "FIT";
+                    node.fills = [
+                        { type: "IMAGE", scaleMode, imageHash }
+                    ];
+                }
+                if (selectionsLength > 0) {
+                    images.length = selectionsLength;
+                    itemsList.length = selectionsLength;
+                    itemsList = itemsList.map((item) => {
+                        return {
+                            title: item.title,
+                            brand: item.brand,
+                            discount_percent: item.discount_percent,
+                            price: item.price.price,
+                            price_before: item.price.price_before,
+                            url: item.url,
+                            id: item.id,
+                            meta_id: item.meta_id,
+                            photo_url: item.photo_url,
+                            date: Object(_utils__WEBPACK_IMPORTED_MODULE_0__["getRandomDate"])(),
+                            time: Object(_utils__WEBPACK_IMPORTED_MODULE_0__["getRandomTime"])(),
+                            order_id: Object(_utils__WEBPACK_IMPORTED_MODULE_0__["getRandomOrder"])(),
+                            gtin_12: Object(_utils__WEBPACK_IMPORTED_MODULE_0__["getRandomGtin"])()
+                        };
+                    });
+                    let i = 0;
+                    for (const node of figma.currentPage.selection) {
+                        for (const childNode of node.children) {
+                            traverse(childNode, i);
+                        }
+                        i++;
+                    }
+                    figma.notify(`Updated ${selectionsLength} items ${Object(_utils__WEBPACK_IMPORTED_MODULE_0__["getRandomEmoji"])()}`);
+                    figma.ui.postMessage("toggleSpinner");
+                }
+            }
+            else {
+                figma.notify("Something went wrong, sorry 😒");
+                figma.ui.postMessage("toggleSpinner");
+            }
+            break;
+        case 'rename-layer':
+            if (selectionsLength > 0) {
+                figma.currentPage.selection.forEach(layer => {
+                    layer.name = msg.value;
+                    figma.notify(`Changed name to: ${msg.value} 🖍`);
+                });
+            }
+            else {
+                figma.notify("Select a layer to rename 👆");
+            }
+            break;
+        case 'replace-text':
+            figma.currentPage.selection.forEach(node => {
+                if (node.type === 'TEXT') {
+                    replaceText(node);
+                }
+            });
+            function replaceText(node) {
+                return __awaiter(this, void 0, void 0, function* () {
+                    yield figma.loadFontAsync(node.fontName);
+                    node.characters = String(msg.value);
+                });
+            }
+            break;
+        case 'replace-img':
+            figma.currentPage.selection.forEach(node => replaceImage(node));
+            function replaceImage(node) {
+                let data = msg.value;
+                let imageHash = figma.createImage(new Uint8Array(data)).hash;
+                let scaleMode = node.fills.scaleMode || "FIT";
+                node.fills = [
+                    { type: "IMAGE", scaleMode, imageHash }
+                ];
+            }
+            break;
+        case 'notify':
+            figma.notify(msg.value);
+            break;
+    }
+});
+
+
+/***/ }),
+
+/***/ "./src/js/utils.ts":
+/*!*************************!*\
+  !*** ./src/js/utils.ts ***!
+  \*************************/
+/*! exports provided: getRandomDate, getRandomTime, getRandomOrder, getRandomGtin, getRandomEmoji */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "getRandomDate", function() { return getRandomDate; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "getRandomTime", function() { return getRandomTime; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "getRandomOrder", function() { return getRandomOrder; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "getRandomGtin", function() { return getRandomGtin; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "getRandomEmoji", function() { return getRandomEmoji; });
+// TODO
+function getRandomDate() {
+    return new Date(Math.random()).toISOString().substr(0, 10).replace(/-/g, '.');
+}
+// TODO
+function getRandomTime() {
+    const date = new Date();
+    return `${date.getHours()}:${date.getMinutes()}`;
+}
+function getRandomOrder() {
+    return Math.floor(Math.random() * 9999) + 9999;
+}
+function getRandomGtin() {
+    return Math.floor(Math.random() * 1000000000) + 99999999999;
+}
+function getRandomEmoji() {
+    const emojis = ['🤘', '🙌', '👌', '💅', '🎉', '🚀'];
+    return emojis[emojis.length * Math.random() | 0];
+}
+
+
+/***/ })
+
+/******/ });

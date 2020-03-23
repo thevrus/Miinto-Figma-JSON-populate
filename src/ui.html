@@ -1,10 +1,10 @@
 <div class="tabs">
-  <a class="tabs__link tabs__link--active" href="#products">Products</a>
-  <a class="tabs__link" href="#product">Product</a>
+  <div class="tabs__link tabs__link--active">Products</div>
+  <div class="tabs__link">Product</div>
 </div>
 
 <ul class="main">
-  <li class="products products--active" id="products">
+  <li class="products products--active">
     <div class="search">
       <input id="search-products" type="search" class="input" placeholder="Miinto link or Item name">
       <ul class="search__list"></ul>
@@ -82,6 +82,17 @@
       </ul>
     </details>
 
-    <button id="create" class='button button--primary button--fw'>Populate</button>
+    <button id="get-products" class='button button--primary button--fw'>Populate</button>
+  </li>
+
+  <li class="products">
+    <input id="product-link" type="search" class="input" placeholder="Item link from Miinto">
+
+    <main class="properties">
+      <div class="properties__photos"></div>
+      <div class="properties__list"></div>
+    </main>
+
+    <button id="product" disabled class="button button--primary button--fw">Fetch product</button>
   </li>
 </ul>

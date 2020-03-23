@@ -1,11 +1,12 @@
 ::-webkit-scrollbar {
   -webkit-appearance: none;
   width: 6px;
+  height: 6px;
 }
 
 ::-webkit-scrollbar-thumb {
   border-radius: 8px;
-  background-color: #D7D7D7;
+  background-color: #d7d7d7;
 }
 
 * {
@@ -16,10 +17,5 @@ body {
   margin: 0;
   padding: 0;
   overflow: hidden;
-}
-
-ul {
-  padding: 0 8px;
-  margin: 0;
-  list-style: none;
+  user-select: none;
 }
